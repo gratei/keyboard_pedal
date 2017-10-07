@@ -1,10 +1,9 @@
 #include "Keyboard.h"
 
 void setup() {
-  // put your setup code here, to run once:
   Keyboard.begin();
-  pinMode(2, INPUT_PULLUP);
-  pinMode(9, OUTPUT);
+  pinMode(2, INPUT_PULLUP); //スイッチ入力（反対側はGNDへ接続）
+  pinMode(9, OUTPUT); //動作確認用のLED（半角入力時に点灯）
   Serial.begin(9600);
 
 }
@@ -13,8 +12,7 @@ bool anow= LOW;
 bool a = LOW;
 
 void loop() {
-  // 導通（離している状態）でL，切断でH:
-  if(digitalRead(2) == HIGH && anow == LOW){
+  if(digitalRead(2) == HIGH && anow == LOW){ //ペダルが踏み込まれている時
     a = !a;
     anow = HIGH;
     Keyboard.press(KEY_RIGHT_CTRL);
@@ -30,7 +28,7 @@ void loop() {
   while(digitalRead(2) == HIGH && anow == HIGH){
   }
 
-  if(digitalRead(2) == LOW && anow == HIGH){
+  if(digitalRead(2) == LOW && anow == HIGH){ //ペダルが踏み込まれていない時
     anow = LOW;
     Keyboard.press(KEY_RIGHT_CTRL);
     Keyboard.press(KEY_RIGHT_SHIFT);
